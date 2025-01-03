@@ -13,7 +13,9 @@ export const Map = () => {
       }
     });
   });
- 
+ // map.nodes.floor_inside.rotation.set(Math.PI / 0, 0, 0);
+  console.log(map.scene);
+  console.log(map);
   return (
     <>
       <RigidBody colliders="trimesh" type="fixed">
