@@ -26,7 +26,18 @@ jobs:
           uses: actions/checkout@v2
           with:
             lfs: true
-  
+ 
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '16' # or the version your project requires
+
+        - name: Install Yarn
+          run: sudo npm install -g yarn
+
+        - name: Run Yarn
+          run: yarn
+
         # Debugging step to list directory contents
         - name: List directory contents
           run: ls -la
