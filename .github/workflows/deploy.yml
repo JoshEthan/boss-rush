@@ -29,4 +29,14 @@ jobs:
   
         # Debugging step to list directory contents
         - name: List directory contents
-          run: ls -la 
+          run: ls -la
+
+        - name: Build
+          run: npm run build
+
+        # Uploads the built web project as an artifact
+        - name: Upload Web Artifact
+          uses: actions/upload-artifact@v1
+          with:
+            name: web
+            path: dist/web
