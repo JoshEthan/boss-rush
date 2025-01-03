@@ -8,7 +8,7 @@ on:
 
 env:
   EXPORT_NAME: boss-rush
-  ITCH_USERNAME: roman-cheez
+  ITCH_USERNAME: romancheez
   ITCH_GAME_ID: boss-rush
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -70,3 +70,14 @@ jobs:
           with:
             name: web-build
             path: dist/
+
+        # Publishes the build to Itch.io using the butler tool
+        - name: Publish to Itch.io
+          uses: KikimoraGames/itch-publish@v2.0.8
+          with:
+            butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
+            gameData: ./dist
+            itchUsername: ${{ env.ITCH_USERNAME }}
+            itchGameId: ${{ env.ITCH_GAME_ID }}
+            buildChannel: web-build
+            buildNumber: ${{ github.run_number }}
