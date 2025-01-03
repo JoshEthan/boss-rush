@@ -73,7 +73,7 @@ jobs:
 
         # Publishes the build to Itch.io using the butler tool
         - name: Publish to Itch.io
-          uses: KikimoraGames/itch-publish@v2.0.8
+          uses: KikimoraGames/itch-publish@v0.0.3
           with:
             butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
             gameData: ./dist
