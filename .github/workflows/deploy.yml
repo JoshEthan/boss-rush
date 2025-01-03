@@ -51,3 +51,22 @@ jobs:
           with:
             name: web-build
             path: ./dist/
+
+    # Job for deploying the project to Itch.io
+    deploy:
+      name: Upload to Itch
+      runs-on: ubuntu-latest
+      # Ensure this job runs after the export-web job
+      needs: export-web
+      # Only run this job on main branch
+      if: github.ref == 'refs/heads/main'  
+      strategy:
+        fail-fast: true
+
+      steps:
+        # Downloads the artifact produced by the previous jobs
+        - name: Download Artifact
+          uses: actions/download-artifact@v2.0.8
+          with:
+            name: web-build
+            path: dist/
