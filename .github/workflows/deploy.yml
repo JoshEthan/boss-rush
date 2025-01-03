@@ -49,5 +49,5 @@ jobs:
         - name: Upload Web Artifact
           uses: actions/upload-artifact@v3
           with:
-            name: web
-            path: dist/web
+            name: web-build
+            path: ./dist/
