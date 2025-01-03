@@ -88,8 +88,6 @@ export function Character({
 
   }, [nodes, clone]);
 
-  console.log(nodes);
-
   return (
     <group {...props} dispose={null} ref={group}>
       <group name="Scene">
