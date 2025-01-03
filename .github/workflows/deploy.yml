@@ -1,0 +1,32 @@
+name: "Deploy to Itch.io"
+
+# Controls when the workflow will run; triggers the workflow on push
+on: 
+    push:
+      branches:
+        - '**' # Trigger on push to any branch
+
+env:
+  EXPORT_NAME: boss-rush
+  ITCH_USERNAME: roman-cheez
+  ITCH_GAME_ID: boss-rush
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    # Job for exporting the project as a web (HTML5) build
+    export-web:
+      name: Web Export
+      # The type of runner that the job will run on
+      runs-on: ubuntu-20.04
+  
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+        # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+        - name: Checkout repository
+          uses: actions/checkout@v2
+          with:
+            lfs: true
+  
+        # Debugging step to list directory contents
+        - name: List directory contents
+          run: ls -la 
