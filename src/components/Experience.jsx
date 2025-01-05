@@ -53,11 +53,13 @@ export const Experience = () => {
 	shadow-mapSize-width={4096}
 	shadow-mapSize-height={4096}
 	shadow-bias={-0.0001} />
+      <Map />
       {
         players.map(({state, joystick}, idx) => (
           <CharacterController 
 	    key={state.id}
 	    position-x={idx * 2}
+	    position-y={idx * 10}
 	    state={state} 
 	    joystick={joystick} 
 	    userPlayer={state.id === myPlayer()?.id} />
