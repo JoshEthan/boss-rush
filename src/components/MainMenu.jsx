@@ -6,6 +6,9 @@ import {
   onPlayerJoin,
   useMultiplayerState,
 } from "playroomkit";
+import {
+  OrthographicCamera,
+} from "@react-three/drei";
 import { useEffect, useState, useRef } from "react";
 import { Map } from "./Map";
 import { Lobby } from "./Lobby";
@@ -25,7 +28,7 @@ import {
 } from "@react-three/drei";
 import {
   EffectComposer,
-  RenderPixelatedPass,
+  Pixelation,
 } from "@react-three/postprocessing";
 
 // const Box = ({ position, size, color}) => {
@@ -50,30 +53,35 @@ import {
 //   );
 // };
 
+
 export const MainMenu = ({ startGame, players }) => {
   const colors = ["red", "green", "blue"];
-  console.log(colors[1 % colors.length]);
+  const canvas = useRef();
+  
+  // useFrame((_, delta) => {
+  //   console.log(canvas.current.position);
+  // });
 
   return (
     <>
       <Canvas
         shadows
-        camera={{ position: [4.2, 1.5, 7.5], fov: 45, near: 0.5 }}
-        sx={{ position: "relative", height: "100vh", width: "100%" }}
+        ref={canvas}
+        camera={{ position: [10, 0, 10], fov: 45, near: 0.5 }}
       >
-        <Camera players={players} />
+        {/* <Camera players={players} /> */}
         <color attach="background" args={["#242424"]} />
+        <EffectComposer>
+          <Pixelation granularity={4} />
+        </EffectComposer>
         <Physics debug>
-          <directionalLight position={[0, 0, 2]} intensity={0.5} />
-          <ambientLight intensity={0.1} />
+          <directionalLight position={[0, 5, 2]} intensity={1.5} />
+          <ambientLight intensity={.4} />
 
           {/* DISPLAY PLAYERS */}
           {players.map((player, index) => (
             <>
-              <group key={player.id} position={[index * 2, 0, 0]}>
-                <EffectComposer>
-                  <RenderPixelatedPass />
-                </EffectComposer>
+              <group key={player.id} position={[index * 2, -1, 0]}>
                 <CharacterMesh color={colors[index % colors.length]} />
               </group>
             </>

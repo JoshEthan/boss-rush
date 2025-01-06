@@ -3,7 +3,7 @@ import {
     Box,
     CameraControls,
     Image,
-    PerspectiveCamera,
+    OrthographicCamera,
     Text,
     useGLTF,
   } from "@react-three/drei";
@@ -16,6 +16,10 @@ export const Camera = ({ players }) => {
   
     const viewport = useThree((state) => state.viewport);
     const cameraReference = useRef();
+
+    // useFrame((_, delta) => {
+    //   console.log(cameraReference.current.position);
+    // });
   
     const adjustCamera = () => {
       const distFactor =
@@ -40,7 +44,7 @@ export const Camera = ({ players }) => {
 
     return (
         <>
-            <PerspectiveCamera ref={cameraReference} position = {[0, 1, 10]} />
+            <OrthographicCamera ref={cameraReference} position = {[2000, 1, 10]} />
             <CameraControls ref={controls} />
         </>
     );

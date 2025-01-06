@@ -80,8 +80,6 @@ export const CharacterMesh = ({
         });
     
     }, [nodes, clone]);
-
-    console.log(nodes);
     
     return (
         <group ref={group} {...props}>
