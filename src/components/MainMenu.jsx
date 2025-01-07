@@ -1,105 +1,63 @@
-import {
-  Joystick,
-  insertCoin,
-  isHost,
-  myPlayer,
-  onPlayerJoin,
-  useMultiplayerState,
-} from "playroomkit";
-import {
-  OrthographicCamera,
-} from "@react-three/drei";
-import { useEffect, useState, useRef } from "react";
-import { Map } from "./Map";
-import { Lobby } from "./Lobby";
-import { Camera } from "./Camera";
-import { CharacterMesh } from "./CharacterMesh";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Physics } from "@react-three/rapier";
-import { Button } from "@mui/material";
-import {
-  Billboard,
-  Box,
-  CameraControls,
-  Image,
-  PerspectiveCamera,
-  Text,
-  useGLTF,
-} from "@react-three/drei";
-import {
-  EffectComposer,
-  Pixelation,
-} from "@react-three/postprocessing";
+import React, { useRef } from "react";
+import { Box, Button, Stack } from "@mui/material";
 
-// const Box = ({ position, size, color}) => {
-//   const ref = useRef();
-//   const [isHovered, setIsHovered] = useState(false);
-
-//   useFrame((state, delta) => {
-//    const rotation_speed = isHovered ? .1 : 0;
-//     ref.current.rotation.y += rotation_speed * delta
-//   })
-
-//   return (
-//     <mesh
-//       position={position}
-//       ref={ref}
-//       onPointerEnter={(event) => (event.stopPropagation(), setIsHovered(true))}
-//       onPointerLeave={() => setIsHovered(false)}
-//     >
-//       <boxGeometry args={size} />
-//       <meshStandardMaterial color={color} />
-//     </mesh>
-//   );
-// };
-
-
+// MainMenu Component
 export const MainMenu = ({ startGame, players }) => {
-  const colors = ["red", "green", "blue"];
-  const canvas = useRef();
-  
-  // useFrame((_, delta) => {
-  //   console.log(canvas.current.position);
-  // });
+  // Default images
+  const defaultImages = [
+    "./assets/profile_add.png",
+    "./assets/profile_add.png",
+    "./assets/profile_add.png",
+  ];
+
+  // Update images based on players
+  const images = defaultImages.map((src, index) =>
+    players[index] ? "./assets/profile.png" : src
+  );
 
   return (
-    <>
-      <Canvas
-        shadows
-        ref={canvas}
-        camera={{ position: [10, 0, 10], fov: 45, near: 0.5 }}
+    <Box
+      sx={{
+        position: "relative",
+        height: "100vh", // Full screen height
+        backgroundColor: "black", // Dark background
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* Centered Images */}
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center", // Ensures horizontal alignment
+        }}
       >
-        {/* <Camera players={players} /> */}
-        <color attach="background" args={["#242424"]} />
-        <EffectComposer>
-          <Pixelation granularity={4} />
-        </EffectComposer>
-        <Physics debug>
-          <directionalLight position={[0, 5, 2]} intensity={1.5} />
-          <ambientLight intensity={.4} />
+        {images.map((src, index) => (
+          <img
+            key={index}
+            src={src}
+            alt={`Profile ${index + 1}`}
+            style={{ width: "30%", height: "auto", borderRadius: "50%" }}
+          />
+        ))}
+      </Stack>
 
-          {/* DISPLAY PLAYERS */}
-          {players.map((player, index) => (
-            <>
-              <group key={player.id} position={[index * 2, -1, 0]}>
-                <CharacterMesh color={colors[index % colors.length]} />
-              </group>
-            </>
-          ))}
-        </Physics>
-      </Canvas>
+      {/* Start Game Button */}
       <Button
         sx={{
           position: "absolute",
-          bottom: "5vh",
-          right: "5vw",
-          zIndex: 10,
+          bottom: "20vh",
         }}
         variant="text"
         onClick={startGame}
       >
         Start Game
       </Button>
-    </>
+    </Box>
   );
 };
