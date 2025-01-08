@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       {isGameStarted ? (
-        <Game />
+        <Game players={players}/>
       ) : (
         <MainMenu startGame={() => setIsGameStarted(true)} players={players} />
       )}

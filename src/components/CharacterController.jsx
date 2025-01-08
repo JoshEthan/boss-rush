@@ -3,7 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { isHost } from "playroomkit";
 import { useEffect, useRef, useState } from "react";
-import { Character } from "./Character";
+import { CharacterMesh } from "./CharacterMesh";
 
 const MOVEMENT_SPEED = 202;
 
@@ -16,6 +16,8 @@ export const CharacterController = ({
   downgradedPerformance,
   ...props
 }) => {
+  console.log(Object.getPrototypeOf(joystick));
+  
   const group = useRef();
   const character = useRef();
   const rigidbody = useRef();
@@ -27,7 +29,7 @@ export const CharacterController = ({
   const scene = useThree((stable) => state.scene);
   const spawnRandomly = () => {};
 
-  console.log(rigidbody);
+  // console.log(rigidbody);
 
   useFrame((_, delta) => {
     // CAMERA FOLLOW
@@ -52,7 +54,7 @@ export const CharacterController = ({
       setAnimation("Run");
       character.current.rotation.y = angle;
 
-      // move character in its own direction
+    //   // move character in its own direction
       const impulse = {
         x: Math.sin(angle) * MOVEMENT_SPEED * delta,
         y: 0,
@@ -79,19 +81,19 @@ export const CharacterController = ({
     <group ref={group} {...props}>
       {userPlayer && <CameraControls ref={controls} />}
       <RigidBody 
-	ref={rigidbody} 
-	colliders={false} 
-	linearDamping={12} 
-	lockRotations 
+        ref={rigidbody} 
+        colliders={false} 
+        linearDamping={12} 
+        lockRotations 
         type={isHost() ? "dynamic" : "kinematicPosition"}
       >
         <group ref={character}>
-	  <Character
-	    color={state.state.profile?.color}
-	    animation={animation}
-	  />
+          <CharacterMesh
+            color={state.profile?.color}
+            animation={animation}
+          />
         </group>
-	<CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
+	      <CapsuleCollider args={[0.7, 0.6]} position={[0, 1.28, 0]} />
       </RigidBody>
     </group>
   );

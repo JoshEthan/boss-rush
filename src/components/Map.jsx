@@ -25,7 +25,7 @@ export const Map = () => {
     const quaternion = new THREE.Quaternion(); 
     degrees += 0.5
     quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(degrees));
-    console.log(quaternion);
+    // console.log(quaternion);
     //console.log(ref.current.rotation().y + quaternion.y);
     const y = ref.current.rotation().y;
     const w = ref.current.rotation().w;
